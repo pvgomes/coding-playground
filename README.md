@@ -1,6 +1,6 @@
 # Coding Playground
 
-A fast, browser-based multi-language coding playground and markdown viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, and Markdown directly in your browser—no server required, no advertisements.
+A fast, browser-based multi-language coding playground and markdown viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, Markdown, and HTML directly in your browser—no server required, no advertisements.
 
 Attention Replit, you're nice, but sometimes people just want to run a simple code.
 
@@ -11,6 +11,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **JavaScript** – Native browser execution via Web Worker
 - **Clojure** – Scittle runtime with full output capture
 - **Markdown** – Live preview with HTML rendering
+- **HTML** – Live preview with interactive elements
 
 🎨 **Code Editor**
 - Syntax highlighting with CodeMirror 5 (Dracula theme)
