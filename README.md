@@ -1,6 +1,6 @@
 # Coding Playground
 
-A fast, browser-based multi-language coding playground with syntax highlighting and file management. Write, run, and test Python, JavaScript, and Clojure code directly in your browser—no server required.
+A fast, browser-based multi-language coding playground and markdown viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, and Markdown directly in your browser—no server required, no advertisements.
 
 Attention Replit, you're nice, but sometimes people just want to run a simple code.
 
@@ -10,6 +10,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Python** – Powered by Pyodide
 - **JavaScript** – Native browser execution via Web Worker
 - **Clojure** – Scittle runtime with full output capture
+- **Markdown** – Live preview with HTML rendering
 
 🎨 **Code Editor**
 - Syntax highlighting with CodeMirror 5 (Dracula theme)
@@ -19,7 +20,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 💾 **Per-Language Persistence**
 - Each language maintains its own file tree and code
 - localStorage-based persistence—code survives page refreshes
-- Create folders and files for organganized development
+- Create folders and files for organized development
 
 🚀 **Fast Performance**
 - Instant page load with deferred CodeMirror upgrade

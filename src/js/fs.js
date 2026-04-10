@@ -11,13 +11,15 @@ export function defaultFS() {
 }
 
 export function defaultFSFor(language) {
-  const ext = language === 'javascript' ? '.js' : language === 'clojure' ? '.clj' : '.py';
+  const ext = language === 'javascript' ? '.js' : language === 'clojure' ? '.clj' : language === 'markdown' ? '.md' : '.py';
   const fileName = 'main' + ext;
   const content = language === 'javascript'
     ? 'console.log("hello world")'
     : language === 'clojure'
       ? '(println "hello world")'
-      : 'print("hello world")';
+      : language === 'markdown'
+        ? '# Hello World\n\nThis is a **markdown** document.\n\n## Features\n\n- Headers\n- *Italic* and **bold** text\n- `inline code`\n- [Links](https://example.com)\n\n```javascript\nconsole.log("Code blocks");\n```'
+        : 'print("hello world")';
   return {
     [fileName]: { type: 'file', content }
   };

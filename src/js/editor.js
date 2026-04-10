@@ -7,7 +7,8 @@ const CM_SCRIPTS = [
   'vendor/codemirror/codemirror.min.js',
   'vendor/codemirror/mode/python/python.min.js',
   'vendor/codemirror/mode/javascript/javascript.min.js',
-  'vendor/codemirror/mode/clojure/clojure.min.js'
+  'vendor/codemirror/mode/clojure/clojure.min.js',
+  'vendor/codemirror/mode/markdown/markdown.min.js'
 ];
 
 let cmLoadPromise = null;

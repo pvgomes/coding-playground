@@ -22,6 +22,7 @@ import { initModal, showModal } from './ui/modal.js';
 import { createPyodideRunner } from './runner/pyodideRunner.js';
 import { createJsRunner } from './runner/jsRunner.js';
 import { createClojureRunner } from './runner/clojureRunner.js';
+import { createMarkdownRunner } from './runner/markdownRunner.js';
 
 const LS_FONT_SIZE = 'pyplay_fontsize';
 const LS_LANGUAGE = 'pyplay_language';
@@ -39,19 +40,22 @@ const runners = {};
 const languageModeMap = {
   python: 'python',
   javascript: 'javascript',
-  clojure: 'clojure'
+  clojure: 'clojure',
+  markdown: 'markdown'
 };
 
 const languageExtMap = {
   python: '.py',
   javascript: '.js',
-  clojure: '.clj'
+  clojure: '.clj',
+  markdown: '.md'
 };
 
 function detectLanguageFromPath(path) {
   if (path.endsWith('.py')) return 'python';
   if (path.endsWith('.js')) return 'javascript';
   if (path.endsWith('.clj') || path.endsWith('.cljs')) return 'clojure';
+  if (path.endsWith('.md') || path.endsWith('.markdown')) return 'markdown';
   return currentLanguage;
 }
 
@@ -126,6 +130,12 @@ function ensureRunner(lang) {
     });
   } else if (lang === 'clojure') {
     runners[lang] = createClojureRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'markdown') {
+    runners[lang] = createMarkdownRunner({
       onStdout: consoleLog,
       onStderr: consoleError,
       onSystem: consoleSystem
