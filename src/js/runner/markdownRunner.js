@@ -89,7 +89,17 @@ export function createMarkdownRunner({ onStdout, onStderr, onSystem }) {
   ${html}
 </body>
 </html>`;
-      onStdout(fullHtml);
+
+      // Open in new window/tab for preview
+      const previewWindow = window.open('', '_blank');
+      if (previewWindow) {
+        previewWindow.document.write(fullHtml);
+        previewWindow.document.close();
+        onStdout('Markdown preview opened in new tab/window');
+      } else {
+        // Fallback: show HTML source if popup blocked
+        onStdout('Popup blocked. Here\'s the rendered HTML:\n\n' + fullHtml);
+      }
     } catch (err) {
       onStderr('Error rendering markdown: ' + err.message);
     }
