@@ -99,7 +99,7 @@ export function createMarkdownRunner({ onStdout, onStderr, onSystem }) {
         existingIframe.remove();
       }
       
-      // Create iframe for markdown preview
+      // Create iframe for markdown preview using data URL
       const iframe = document.createElement('iframe');
       iframe.style.width = '100%';
       iframe.style.height = '400px';
@@ -109,13 +109,11 @@ export function createMarkdownRunner({ onStdout, onStderr, onSystem }) {
       iframe.style.marginBottom = '8px';
       iframe.sandbox.add('allow-links');
       
+      // Use data URL to set the iframe content
+      const dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(fullHtml);
+      iframe.src = dataUrl;
+      
       consoleOutput.appendChild(iframe);
-      
-      // Write HTML to iframe
-      iframe.contentDocument.open();
-      iframe.contentDocument.write(fullHtml);
-      iframe.contentDocument.close();
-      
       onStdout('Markdown preview rendered in console');
     } catch (err) {
       onStderr('Error rendering markdown: ' + err.message);
