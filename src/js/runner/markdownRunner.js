@@ -90,16 +90,33 @@ export function createMarkdownRunner({ onStdout, onStderr, onSystem }) {
 </body>
 </html>`;
 
-      // Open in new window/tab for preview
-      const previewWindow = window.open('', '_blank');
-      if (previewWindow) {
-        previewWindow.document.write(fullHtml);
-        previewWindow.document.close();
-        onStdout('Markdown preview opened in new tab/window');
-      } else {
-        // Fallback: show HTML source if popup blocked
-        onStdout('Popup blocked. Here\'s the rendered HTML:\n\n' + fullHtml);
+      // Render in console window using iframe
+      const consoleOutput = document.getElementById('console-output');
+      
+      // Remove existing iframe if any
+      const existingIframe = consoleOutput.querySelector('iframe');
+      if (existingIframe) {
+        existingIframe.remove();
       }
+      
+      // Create iframe for markdown preview
+      const iframe = document.createElement('iframe');
+      iframe.style.width = '100%';
+      iframe.style.height = '400px';
+      iframe.style.border = '1px solid #3c3c3c';
+      iframe.style.borderRadius = '4px';
+      iframe.style.marginTop = '8px';
+      iframe.style.marginBottom = '8px';
+      iframe.sandbox.add('allow-links');
+      
+      consoleOutput.appendChild(iframe);
+      
+      // Write HTML to iframe
+      iframe.contentDocument.open();
+      iframe.contentDocument.write(fullHtml);
+      iframe.contentDocument.close();
+      
+      onStdout('Markdown preview rendered in console');
     } catch (err) {
       onStderr('Error rendering markdown: ' + err.message);
     }
