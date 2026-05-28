@@ -24,6 +24,7 @@ import { createJsRunner } from './runner/jsRunner.js';
 import { createClojureRunner } from './runner/clojureRunner.js';
 import { createMarkdownRunner } from './runner/markdownRunner.js';
 import { createHtmlRunner } from './runner/htmlRunner.js';
+import { createPlaintextRunner } from './runner/plaintextRunner.js';
 
 const LS_FONT_SIZE = 'pyplay_fontsize';
 const LS_LANGUAGE = 'pyplay_language';
@@ -43,7 +44,8 @@ const languageModeMap = {
   javascript: 'javascript',
   clojure: 'clojure',
   markdown: 'markdown',
-  html: 'xml'
+  html: 'xml',
+  plaintext: 'text'
 };
 
 const languageExtMap = {
@@ -51,7 +53,8 @@ const languageExtMap = {
   javascript: '.js',
   clojure: '.clj',
   markdown: '.md',
-  html: '.html'
+  html: '.html',
+  plaintext: '.txt'
 };
 
 function detectLanguageFromPath(path) {
@@ -60,6 +63,7 @@ function detectLanguageFromPath(path) {
   if (path.endsWith('.clj') || path.endsWith('.cljs')) return 'clojure';
   if (path.endsWith('.md') || path.endsWith('.markdown')) return 'markdown';
   if (path.endsWith('.html') || path.endsWith('.htm')) return 'html';
+  if (path.endsWith('.txt')) return 'plaintext';
   return currentLanguage;
 }
 
@@ -146,6 +150,12 @@ function ensureRunner(lang) {
     });
   } else if (lang === 'html') {
     runners[lang] = createHtmlRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'plaintext') {
+    runners[lang] = createPlaintextRunner({
       onStdout: consoleLog,
       onStderr: consoleError,
       onSystem: consoleSystem

@@ -11,7 +11,7 @@ export function defaultFS() {
 }
 
 export function defaultFSFor(language) {
-  const ext = language === 'javascript' ? '.js' : language === 'clojure' ? '.clj' : language === 'markdown' ? '.md' : language === 'html' ? '.html' : '.py';
+  const ext = language === 'javascript' ? '.js' : language === 'clojure' ? '.clj' : language === 'markdown' ? '.md' : language === 'html' ? '.html' : language === 'plaintext' ? '.txt' : '.py';
   const fileName = 'main' + ext;
   const content = language === 'javascript'
     ? 'console.log("hello world")'
@@ -21,7 +21,9 @@ export function defaultFSFor(language) {
         ? '# Hello World\n\nThis is a **markdown** document.\n\n## Features\n\n- Headers\n- *Italic* and **bold** text\n- `inline code`\n- [Links](https://example.com)\n\n```javascript\nconsole.log("Code blocks");\n```'
         : language === 'html'
           ? '<!DOCTYPE html>\n<html>\n<head>\n  <title>Hello World</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n  <p>This is an HTML document.</p>\n  <button onclick="alert(\'Hello!\')">Click me</button>\n</body>\n</html>'
-          : 'print("hello world")';
+          : language === 'plaintext'
+            ? '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.'
+            : 'print("hello world")';
   return {
     [fileName]: { type: 'file', content }
   };
