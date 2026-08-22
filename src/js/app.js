@@ -44,7 +44,7 @@ const languageModeMap = {
   javascript: 'javascript',
   clojure: 'clojure',
   markdown: 'markdown',
-  html: 'xml',
+  html: 'text/html',
   plaintext: 'text'
 };
 
