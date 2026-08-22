@@ -25,10 +25,14 @@ import { createClojureRunner } from './runner/clojureRunner.js';
 import { createMarkdownRunner } from './runner/markdownRunner.js';
 import { createHtmlRunner } from './runner/htmlRunner.js';
 import { createPlaintextRunner } from './runner/plaintextRunner.js';
-import { createTypeScriptRunner } from './runner/typescriptRunner.js';
-import { createPhpRunner } from './runner/phpRunner.js';
 import { createLuaRunner } from './runner/luaRunner.js';
 import { createCleanAiTextRunner } from './runner/cleanAiTextRunner.js';
+
+const runnerCallbacks = {
+  onStdout: consoleLog,
+  onStderr: consoleError,
+  onSystem: consoleSystem
+};
 
 const LS_FONT_SIZE = 'pyplay_fontsize';
 const LS_LANGUAGE = 'pyplay_language';
@@ -129,76 +133,38 @@ function switchLanguage(lang) {
   localStorage.setItem(LS_LANGUAGE, lang);
   setLanguage(lang);
   loadLanguageState(lang);
-  runner = ensureRunner(currentLanguage);
+  void ensureRunner(currentLanguage).then(r => { runner = r; });
 
   const fileToOpen = (openFile && fs[openFile]) ? openFile : getDefaultFileName(lang);
   openFileInEditor(fileToOpen);
   refreshEditor(cmEditor);
 }
 
-function ensureRunner(lang) {
+async function ensureRunner(lang) {
   if (runners[lang]) return runners[lang];
 
   if (lang === 'python') {
-    runners[lang] = createPyodideRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createPyodideRunner(runnerCallbacks);
   } else if (lang === 'javascript') {
-    runners[lang] = createJsRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createJsRunner(runnerCallbacks);
   } else if (lang === 'clojure') {
-    runners[lang] = createClojureRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createClojureRunner(runnerCallbacks);
   } else if (lang === 'markdown') {
-    runners[lang] = createMarkdownRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createMarkdownRunner(runnerCallbacks);
   } else if (lang === 'html') {
-    runners[lang] = createHtmlRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createHtmlRunner(runnerCallbacks);
   } else if (lang === 'plaintext') {
-    runners[lang] = createPlaintextRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createPlaintextRunner(runnerCallbacks);
   } else if (lang === 'typescript') {
-    runners[lang] = createTypeScriptRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    const { createTypeScriptRunner } = await import('./runner/typescriptRunner.js');
+    runners[lang] = createTypeScriptRunner(runnerCallbacks);
   } else if (lang === 'php') {
-    runners[lang] = createPhpRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    const { createPhpRunner } = await import('./runner/phpRunner.js');
+    runners[lang] = createPhpRunner(runnerCallbacks);
   } else if (lang === 'lua') {
-    runners[lang] = createLuaRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createLuaRunner(runnerCallbacks);
   } else if (lang === 'clean-ai-text') {
-    runners[lang] = createCleanAiTextRunner({
-      onStdout: consoleLog,
-      onStderr: consoleError,
-      onSystem: consoleSystem
-    });
+    runners[lang] = createCleanAiTextRunner(runnerCallbacks);
   }
 
   return runners[lang];
@@ -324,7 +290,7 @@ function createItem({ name, type, parentPath }) {
 }
 
 async function runCode() {
-  runner = ensureRunner(currentLanguage);
+  runner = await ensureRunner(currentLanguage);
   if (!runner) return;
 
   if (openFile && fs[openFile]) {
@@ -437,7 +403,7 @@ async function boot() {
     });
     
     console.log('6. Setting up runner');
-    runner = ensureRunner(currentLanguage);
+    runner = await ensureRunner(currentLanguage);
     console.log('7. Runner created');
     
     document.getElementById('run-btn').disabled = false;
