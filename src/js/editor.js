@@ -9,7 +9,10 @@ const CM_SCRIPTS = [
   'vendor/codemirror/mode/javascript/javascript.min.js',
   'vendor/codemirror/mode/clojure/clojure.min.js',
   'vendor/codemirror/mode/markdown/markdown.min.js',
-  'vendor/codemirror/mode/xml/xml.min.js'
+  'vendor/codemirror/mode/xml/xml.min.js',
+  'vendor/codemirror/mode/clike/clike.min.js',
+  'vendor/codemirror/mode/php/php.min.js',
+  'vendor/codemirror/mode/lua/lua.min.js'
 ];
 
 let cmLoadPromise = null;

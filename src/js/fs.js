@@ -10,20 +10,36 @@ export function defaultFS() {
   return defaultFSFor('python');
 }
 
+const defaultExtByLang = {
+  python: '.py',
+  javascript: '.js',
+  typescript: '.ts',
+  clojure: '.clj',
+  markdown: '.md',
+  html: '.html',
+  php: '.php',
+  lua: '.lua',
+  plaintext: '.txt',
+  'clean-ai-text': '.txt'
+};
+
+const defaultContentByLang = {
+  javascript: 'console.log("hello world")',
+  typescript: 'const message: string = "hello world";\nconsole.log(message);',
+  clojure: '(println "hello world")',
+  markdown: '# Hello World\n\nThis is a **markdown** document.\n\n## Features\n\n- Headers\n- *Italic* and **bold** text\n- `inline code`\n- [Links](https://example.com)\n\n```javascript\nconsole.log("Code blocks");\n```',
+  html: '<!DOCTYPE html>\n<html>\n<head>\n  <title>Hello World</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n  <p>This is an HTML document.</p>\n  <button onclick="alert(\'Hello!\')">Click me</button>\n</body>\n</html>',
+  php: '<?php\necho "hello world\\n";',
+  lua: 'print("hello world")',
+  plaintext: '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.',
+  'clean-ai-text': 'This is AI-style text — with em dashes — and en dashes – scattered around.\n\nIt also uses spaced hyphens - like this - which we can clean up.\n\nPaste your text here and click Run to remove dashes and normalize spacing.',
+  python: 'print("hello world")'
+};
+
 export function defaultFSFor(language) {
-  const ext = language === 'javascript' ? '.js' : language === 'clojure' ? '.clj' : language === 'markdown' ? '.md' : language === 'html' ? '.html' : language === 'plaintext' ? '.txt' : '.py';
+  const ext = defaultExtByLang[language] || '.py';
   const fileName = 'main' + ext;
-  const content = language === 'javascript'
-    ? 'console.log("hello world")'
-    : language === 'clojure'
-      ? '(println "hello world")'
-      : language === 'markdown'
-        ? '# Hello World\n\nThis is a **markdown** document.\n\n## Features\n\n- Headers\n- *Italic* and **bold** text\n- `inline code`\n- [Links](https://example.com)\n\n```javascript\nconsole.log("Code blocks");\n```'
-        : language === 'html'
-          ? '<!DOCTYPE html>\n<html>\n<head>\n  <title>Hello World</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n  <p>This is an HTML document.</p>\n  <button onclick="alert(\'Hello!\')">Click me</button>\n</body>\n</html>'
-          : language === 'plaintext'
-            ? '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.'
-            : 'print("hello world")';
+  const content = defaultContentByLang[language] || defaultContentByLang.python;
   return {
     [fileName]: { type: 'file', content }
   };

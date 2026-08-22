@@ -25,6 +25,10 @@ import { createClojureRunner } from './runner/clojureRunner.js';
 import { createMarkdownRunner } from './runner/markdownRunner.js';
 import { createHtmlRunner } from './runner/htmlRunner.js';
 import { createPlaintextRunner } from './runner/plaintextRunner.js';
+import { createTypeScriptRunner } from './runner/typescriptRunner.js';
+import { createPhpRunner } from './runner/phpRunner.js';
+import { createLuaRunner } from './runner/luaRunner.js';
+import { createCleanAiTextRunner } from './runner/cleanAiTextRunner.js';
 
 const LS_FONT_SIZE = 'pyplay_fontsize';
 const LS_LANGUAGE = 'pyplay_language';
@@ -42,28 +46,39 @@ const runners = {};
 const languageModeMap = {
   python: 'python',
   javascript: 'javascript',
+  typescript: { name: 'javascript', typescript: true },
   clojure: 'clojure',
   markdown: 'markdown',
   html: 'text/html',
-  plaintext: 'text'
+  php: 'php',
+  lua: 'lua',
+  plaintext: 'text',
+  'clean-ai-text': 'text'
 };
 
 const languageExtMap = {
   python: '.py',
   javascript: '.js',
+  typescript: '.ts',
   clojure: '.clj',
   markdown: '.md',
   html: '.html',
-  plaintext: '.txt'
+  php: '.php',
+  lua: '.lua',
+  plaintext: '.txt',
+  'clean-ai-text': '.txt'
 };
 
 function detectLanguageFromPath(path) {
   if (path.endsWith('.py')) return 'python';
+  if (path.endsWith('.ts')) return 'typescript';
   if (path.endsWith('.js')) return 'javascript';
   if (path.endsWith('.clj') || path.endsWith('.cljs')) return 'clojure';
   if (path.endsWith('.md') || path.endsWith('.markdown')) return 'markdown';
   if (path.endsWith('.html') || path.endsWith('.htm')) return 'html';
-  if (path.endsWith('.txt')) return 'plaintext';
+  if (path.endsWith('.php')) return 'php';
+  if (path.endsWith('.lua')) return 'lua';
+  if (path.endsWith('.txt')) return currentLanguage === 'clean-ai-text' ? 'clean-ai-text' : 'plaintext';
   return currentLanguage;
 }
 
@@ -156,6 +171,30 @@ function ensureRunner(lang) {
     });
   } else if (lang === 'plaintext') {
     runners[lang] = createPlaintextRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'typescript') {
+    runners[lang] = createTypeScriptRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'php') {
+    runners[lang] = createPhpRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'lua') {
+    runners[lang] = createLuaRunner({
+      onStdout: consoleLog,
+      onStderr: consoleError,
+      onSystem: consoleSystem
+    });
+  } else if (lang === 'clean-ai-text') {
+    runners[lang] = createCleanAiTextRunner({
       onStdout: consoleLog,
       onStderr: consoleError,
       onSystem: consoleSystem
