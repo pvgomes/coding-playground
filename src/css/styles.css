@@ -362,6 +362,11 @@ body {
   text-decoration: underline;
 }
 
+#console-footer .footer-sep {
+  margin: 0 0.5em;
+  color: var(--border);
+}
+
 /* Modal */
 #modal-overlay {
   display: none;
