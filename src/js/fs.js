@@ -34,7 +34,7 @@ const defaultContentByLang = {
   lua: 'print("hello world")',
   plaintext: '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.',
   'clean-ai-text': 'This is AI-style text — with em dashes — and en dashes – scattered around.\n\nIt also uses spaced hyphens - like this - which we can clean up.\n\nPaste your text here and click Run to remove dashes and normalize spacing.',
-  'base64-image': 'Paste a data URL or raw Base64 image here, then click Run.\n\nExample data URL:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+  'base64-image': 'Paste a data URL or raw Base64 image here, then click Run.\n\nExample: a 32 x 32 pixel-art cat\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR42mNYd+fT/4HEDKMOGHXAqANwSUQHZuDE1NQz+B3w/tJuOCbWAaToGXXA4EwD+AyiBJPlAHMDR4rwqAModgAMF5zsh2NccUxIDcUOAPmIkAPwqRnaITBg2RBb6QbD77qngzE2ObIdgCs1k+oAXOZQNQTwYZpHAaEQosgB1E6MZLcJRx0w2i8YEQ4AAOpa+W5QlKQWAAAAAElFTkSuQmCC',
   python: 'print("hello world")'
 };
 
