@@ -74,6 +74,16 @@ body {
   letter-spacing: 0.3px;
 }
 
+.topbar-link {
+  color: var(--text);
+  font-size: 12px;
+  text-decoration: none;
+}
+.topbar-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 #language-controls {
   position: absolute;
   right: 16px;
@@ -468,3 +478,95 @@ body {
 #modal-cancel:hover { background: #3a3a3a; }
 #modal-create { background: var(--accent); color: #fff; }
 #modal-create:hover { background: var(--accent-hover); }
+
+/* Image cleanup */
+.cleanup-page {
+  min-height: 100vh;
+  height: auto;
+  overflow: auto;
+}
+.cleanup-page #topbar {
+  justify-content: flex-start;
+}
+.cleanup-page #topbar-title {
+  position: static;
+}
+.cleanup-back-link {
+  margin-right: 12px;
+}
+.cleanup-main {
+  display: grid;
+  flex: 1;
+  place-items: start center;
+  padding: 48px 20px;
+}
+.cleanup-card {
+  width: min(100%, 600px);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 28px;
+}
+.cleanup-card h1 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.cleanup-card > p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+#cleanup-form {
+  display: grid;
+  gap: 8px;
+}
+#cleanup-form label {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+#cleanup-form input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font: inherit;
+  padding: 8px 10px;
+}
+#cleanup-form input:focus { border-color: var(--accent); outline: none; }
+#cleanup-submit,
+#download-link {
+  background: var(--accent);
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  margin-top: 16px;
+  padding: 9px 14px;
+  text-align: center;
+  text-decoration: none;
+}
+#cleanup-submit:hover:not(:disabled),
+#download-link:hover { background: var(--accent-hover); }
+#cleanup-submit:disabled { background: #555; cursor: not-allowed; }
+#cleanup-status {
+  min-height: 1.6em;
+  color: var(--text-muted);
+  margin: 16px 0 0;
+}
+.cleanup-preview {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  line-height: 0;
+  margin-top: 16px;
+  padding: 8px;
+}
+.cleanup-preview img {
+  display: block;
+  height: auto;
+  max-height: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+}
