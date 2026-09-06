@@ -547,6 +547,9 @@ body {
   text-align: center;
   text-decoration: none;
 }
+#download-link {
+  display: block;
+}
 #cleanup-submit:hover:not(:disabled),
 #download-link:hover { background: var(--accent-hover); }
 #cleanup-submit:disabled { background: #555; cursor: not-allowed; }
