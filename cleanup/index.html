@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clean image metadata in your browser." />
+  <meta name="theme-color" content="#1e1e1e" />
+  <title>Image Cleanup | Coding Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="stylesheet" href="../src/css/styles.css" />
+</head>
+<body class="cleanup-page">
+  <header id="topbar">
+    <a class="topbar-link cleanup-back-link" href="../">← Coding Playground</a>
+    <span id="topbar-title">Image Cleanup</span>
+  </header>
+
+  <main class="cleanup-main">
+    <section class="cleanup-card" aria-labelledby="cleanup-title">
+      <h1 id="cleanup-title">Clean image metadata</h1>
+      <p>Upload an image to remove its existing metadata. The download includes only your description and today’s date.</p>
+
+      <form id="cleanup-form">
+        <label for="image-input">Image</label>
+        <input id="image-input" name="image" type="file" accept="image/*" required />
+
+        <label for="description-input">Description</label>
+        <input id="description-input" name="description" type="text" maxlength="255" placeholder="image" />
+
+        <button id="cleanup-submit" type="submit">Clean image</button>
+      </form>
+
+      <p id="cleanup-status" role="status" aria-live="polite"></p>
+      <a id="download-link" hidden>Download cleaned image</a>
+      <div id="cleanup-preview" class="cleanup-preview" hidden>
+        <img id="preview-image" alt="Cleaned image preview" />
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../src/js/cleanup.js"></script>
+</body>
+</html>

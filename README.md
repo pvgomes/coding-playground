@@ -13,6 +13,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Markdown** – Live preview with HTML rendering
 - **HTML** – Live preview with interactive elements
 - **Base64 Image** – Decode a pasted Base64 image or `data:image/...;base64,...` URL into a preview
+- **Image Cleanup** – Upload an image at `/cleanup`, remove its existing metadata, and download a JPEG with a new description and today’s timestamps
 
 🎨 **Code Editor**
 - Syntax highlighting with CodeMirror 5 (Dracula theme)
@@ -61,6 +62,7 @@ open http://localhost:8000
 4. **Run Code** – Click the Run button or use the console
 5. **Adjust Font** – Use A− and A+ buttons to resize text (10–40px)
 6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
+7. **Clean Image Metadata** – Open **Cleanup** in the top bar, upload an image, optionally add a description, then download the cleaned JPEG. If no description is supplied, it uses `image`.
 
 ### Code Execution
 
