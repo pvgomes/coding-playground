@@ -20,7 +20,8 @@ const defaultExtByLang = {
   php: '.php',
   lua: '.lua',
   plaintext: '.txt',
-  'clean-ai-text': '.txt'
+  'clean-ai-text': '.txt',
+  'base64-image': '.base64'
 };
 
 const defaultContentByLang = {
@@ -33,6 +34,7 @@ const defaultContentByLang = {
   lua: 'print("hello world")',
   plaintext: '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.',
   'clean-ai-text': 'This is AI-style text — with em dashes — and en dashes – scattered around.\n\nIt also uses spaced hyphens - like this - which we can clean up.\n\nPaste your text here and click Run to remove dashes and normalize spacing.',
+  'base64-image': 'Paste a data URL or raw Base64 image here, then click Run.\n\nExample data URL:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
   python: 'print("hello world")'
 };
 

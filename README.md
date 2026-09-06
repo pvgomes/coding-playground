@@ -12,6 +12,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Clojure** – Scittle runtime with full output capture
 - **Markdown** – Live preview with HTML rendering
 - **HTML** – Live preview with interactive elements
+- **Base64 Image** – Decode a pasted Base64 image or `data:image/...;base64,...` URL into a preview
 
 🎨 **Code Editor**
 - Syntax highlighting with CodeMirror 5 (Dracula theme)
@@ -59,6 +60,7 @@ open http://localhost:8000
 3. **Write Code** – Edit code in the editor
 4. **Run Code** – Click the Run button or use the console
 5. **Adjust Font** – Use A− and A+ buttons to resize text (10–40px)
+6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
 
 ### Code Execution
 

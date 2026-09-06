@@ -27,6 +27,7 @@ import { createHtmlRunner } from './runner/htmlRunner.js';
 import { createPlaintextRunner } from './runner/plaintextRunner.js';
 import { createLuaRunner } from './runner/luaRunner.js';
 import { createCleanAiTextRunner } from './runner/cleanAiTextRunner.js';
+import { createBase64ImageRunner } from './runner/base64ImageRunner.js';
 
 const runnerCallbacks = {
   onStdout: consoleLog,
@@ -57,7 +58,8 @@ const languageModeMap = {
   php: 'php',
   lua: 'lua',
   plaintext: 'text',
-  'clean-ai-text': 'text'
+  'clean-ai-text': 'text',
+  'base64-image': 'text'
 };
 
 const languageExtMap = {
@@ -70,7 +72,8 @@ const languageExtMap = {
   php: '.php',
   lua: '.lua',
   plaintext: '.txt',
-  'clean-ai-text': '.txt'
+  'clean-ai-text': '.txt',
+  'base64-image': '.base64'
 };
 
 function detectLanguageFromPath(path) {
@@ -165,6 +168,8 @@ async function ensureRunner(lang) {
     runners[lang] = createLuaRunner(runnerCallbacks);
   } else if (lang === 'clean-ai-text') {
     runners[lang] = createCleanAiTextRunner(runnerCallbacks);
+  } else if (lang === 'base64-image') {
+    runners[lang] = createBase64ImageRunner(runnerCallbacks);
   }
 
   return runners[lang];

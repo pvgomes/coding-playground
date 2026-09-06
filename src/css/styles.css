@@ -340,6 +340,21 @@ body {
 .out-stdout { color: #d4d4d4; }
 .out-stderr  { color: #e06c75; }
 .out-system  { color: #858585; font-style: italic; }
+.image-preview {
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  line-height: 0;
+}
+.image-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  margin: 0 auto;
+  object-fit: contain;
+}
 
 #console-footer {
   padding: 8px 12px;
