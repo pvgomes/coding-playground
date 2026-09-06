@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Clean image metadata in your browser." />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
   <meta name="theme-color" content="#1e1e1e" />
   <title>Image Cleanup | Coding Playground</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
@@ -31,10 +32,10 @@
       </form>
 
       <p id="cleanup-status" role="status" aria-live="polite"></p>
-      <a id="download-link" hidden>Download cleaned image</a>
       <div id="cleanup-preview" class="cleanup-preview" hidden>
         <img id="preview-image" alt="Cleaned image preview" />
       </div>
+      <a id="download-link" hidden>Download cleaned image</a>
     </section>
   </main>
 
