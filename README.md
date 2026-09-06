@@ -190,6 +190,10 @@ Each language has its own localStorage key:
 ### Static Hosting
 Copy entire directory to any static host (Vercel, Netlify, etc.)
 
+### Pull Request Validation
+
+GitHub Actions validates the syntax of every frontend JavaScript module on pull requests to `main`. Configure the **JavaScript syntax** status check as required in the `main` branch protection rule to prevent merging a pull request when this validation fails.
+
 ## Browser Support
 
 - Chrome/Edge 90+
