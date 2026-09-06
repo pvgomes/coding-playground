@@ -28,6 +28,7 @@ import { createPlaintextRunner } from './runner/plaintextRunner.js';
 import { createLuaRunner } from './runner/luaRunner.js';
 import { createCleanAiTextRunner } from './runner/cleanAiTextRunner.js';
 import { createBase64ImageRunner } from './runner/base64ImageRunner.js';
+import { createMermaidRunner } from './runner/mermaidRunner.js';
 
 const runnerCallbacks = {
   onStdout: consoleLog,
@@ -54,6 +55,7 @@ const languageModeMap = {
   typescript: { name: 'javascript', typescript: true },
   clojure: 'clojure',
   markdown: 'markdown',
+  mermaid: 'text',
   html: 'text/html',
   php: 'php',
   lua: 'lua',
@@ -68,6 +70,7 @@ const languageExtMap = {
   typescript: '.ts',
   clojure: '.clj',
   markdown: '.md',
+  mermaid: '.mmd',
   html: '.html',
   php: '.php',
   lua: '.lua',
@@ -82,6 +85,7 @@ function detectLanguageFromPath(path) {
   if (path.endsWith('.js')) return 'javascript';
   if (path.endsWith('.clj') || path.endsWith('.cljs')) return 'clojure';
   if (path.endsWith('.md') || path.endsWith('.markdown')) return 'markdown';
+  if (path.endsWith('.mmd') || path.endsWith('.mermaid')) return 'mermaid';
   if (path.endsWith('.html') || path.endsWith('.htm')) return 'html';
   if (path.endsWith('.php')) return 'php';
   if (path.endsWith('.lua')) return 'lua';
@@ -170,6 +174,8 @@ async function ensureRunner(lang) {
     runners[lang] = createCleanAiTextRunner(runnerCallbacks);
   } else if (lang === 'base64-image') {
     runners[lang] = createBase64ImageRunner(runnerCallbacks);
+  } else if (lang === 'mermaid') {
+    runners[lang] = createMermaidRunner(runnerCallbacks);
   }
 
   return runners[lang];

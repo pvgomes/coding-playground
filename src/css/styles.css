@@ -365,6 +365,21 @@ body {
   margin: 0 auto;
   object-fit: contain;
 }
+.mermaid-preview {
+  margin: 8px 0;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+}
+.mermaid-preview svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
 
 #console-footer {
   padding: 8px 12px;

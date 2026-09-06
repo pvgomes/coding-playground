@@ -1,6 +1,6 @@
 # Coding Playground
 
-A fast, browser-based multi-language coding playground and markdown viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, Markdown, and HTML directly in your browser—no server required, no advertisements.
+A fast, browser-based multi-language coding playground and diagram viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, Markdown, Mermaid, and HTML directly in your browser—no server required, no advertisements.
 
 Attention Replit, you're nice, but sometimes people just want to run a simple code.
 
@@ -11,6 +11,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **JavaScript** – Native browser execution via Web Worker
 - **Clojure** – Scittle runtime with full output capture
 - **Markdown** – Live preview with HTML rendering
+- **Mermaid** – Render flowcharts, sequence diagrams, and other Mermaid diagrams locally
 - **HTML** – Live preview with interactive elements
 - **Base64 Image** – Decode a pasted Base64 image or `data:image/...;base64,...` URL into a preview
 - **Image Cleanup** – Upload an image at `/cleanup`, remove its existing metadata, and download a JPEG with a new description and today’s timestamps
@@ -41,6 +42,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Python**: `.py`
 - **JavaScript**: `.js`
 - **Clojure**: `.clj`
+- **Mermaid**: `.mmd`
 
 ## How to Use
 
@@ -63,12 +65,14 @@ open http://localhost:8000
 5. **Adjust Font** – Use A− and A+ buttons to resize text (10–40px)
 6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. Lines beginning with `//` are comments and are ignored. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
 7. **Clean Image Metadata** – Open **Cleanup** in the top bar, upload an image, optionally add a description, then download the cleaned JPEG. If no description is supplied, it uses `image`.
+8. **Render Mermaid Diagrams** – Select **Mermaid**, edit the `.mmd` source, then click **Run** to render the diagram in the console.
 
 ### Code Execution
 
 - **Python**: Executed via Pyodide WASM
 - **JavaScript**: Runs in a Web Worker (isolated context)
 - **Clojure**: Evaluated with Scittle, captures all `println` output
+- **Mermaid**: Rendered locally with Mermaid.js
 
 ## Project Structure
 
@@ -93,6 +97,7 @@ coding-playground/
 │   │       └── clojureRunner.js     # Clojure execution + output capture
 │   └── vendor/
 │       ├── codemirror/       # CodeMirror 5.65.16 (local)
+│       ├── mermaid/          # Mermaid.js diagram renderer (local)
 │       └── scittle/          # Scittle 0.6.21 (local, patched)
 └── README.md
 ```
