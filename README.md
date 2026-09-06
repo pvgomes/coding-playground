@@ -61,7 +61,7 @@ open http://localhost:8000
 3. **Write Code** – Edit code in the editor
 4. **Run Code** – Click the Run button or use the console
 5. **Adjust Font** – Use A− and A+ buttons to resize text (10–40px)
-6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
+6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. Lines beginning with `//` are comments and are ignored. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
 7. **Clean Image Metadata** – Open **Cleanup** in the top bar, upload an image, optionally add a description, then download the cleaned JPEG. If no description is supplied, it uses `image`.
 
 ### Code Execution

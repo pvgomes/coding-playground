@@ -17,6 +17,15 @@ describe('decodeBase64Image', () => {
     expect(image.mimeType).to.equal('image/png');
   });
 
+  it('ignores lines beginning with // as comments', () => {
+    const image = decodeBase64Image(`// Paste an image below.
+  // Example: a 1 x 1 PNG
+data:image/png;base64,${png}
+// This line is ignored too.`);
+
+    expect(image.mimeType).to.equal('image/png');
+  });
+
   it('rejects data URLs whose declared type does not match the image', () => {
     expect(() => decodeBase64Image(`data:image/jpeg;base64,${png}`))
       .to.throw('does not match');

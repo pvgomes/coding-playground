@@ -60,8 +60,16 @@ function decodeBase64(value) {
   return Uint8Array.from(binary, char => char.charCodeAt(0));
 }
 
+function removeCommentLines(input) {
+  return input
+    .split(/\r?\n/)
+    .filter(line => !line.trimStart().startsWith('//'))
+    .join('\n')
+    .trim();
+}
+
 export function decodeBase64Image(input) {
-  const value = input.trim();
+  const value = removeCommentLines(input);
   const dataUrlMatch = /^data:([^;,]+);base64,([\s\S]*)$/i.exec(value);
   const declaredMimeType = dataUrlMatch ? dataUrlMatch[1].toLowerCase() : null;
 
