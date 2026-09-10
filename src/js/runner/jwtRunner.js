@@ -73,7 +73,7 @@ async function verifySignature({ algorithm, signingInput, signature, secret }) {
     return { status: 'Not verified (optional): provide "secret: your-key" to verify HS256/HS384/HS512.' };
   }
 
-  if (!crypto || !crypto.subtle) {
+  if (typeof crypto === 'undefined' || !crypto.subtle) {
     return { status: 'Not verified: Web Crypto is unavailable in this environment.' };
   }
 
