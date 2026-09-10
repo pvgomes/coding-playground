@@ -39,7 +39,7 @@ function parseJwtInput(input) {
   }
 
   const parts = tokenLine.split('.');
-  if (parts.length !== 3 || !parts[0] || !parts[1]) {
+  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) {
     throw new Error('JWT must contain 3 dot-separated parts.');
   }
 
@@ -165,6 +165,11 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
       });
 
       const consoleOutput = document.getElementById('console-output');
+      if (!consoleOutput) {
+        onStdout(JSON.stringify({ header: decoded.header, payload: decoded.payload }, null, 2));
+        onSystem(verification.status);
+        return;
+      }
       const existingIframe = consoleOutput.querySelector('iframe.jwt-preview');
       if (existingIframe) existingIframe.remove();
       const iframe = document.createElement('iframe');

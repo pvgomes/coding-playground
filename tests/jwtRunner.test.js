@@ -28,6 +28,10 @@ describe('decodeJwt', () => {
   it('throws when token does not have 3 parts', () => {
     expect(() => decodeJwt('abc.def')).to.throw('3 dot-separated parts');
   });
+
+  it('throws when signature part is empty', () => {
+    expect(() => decodeJwt('abc.def.')).to.throw('3 dot-separated parts');
+  });
 });
 
 describe('verifyJwtSignature', () => {
