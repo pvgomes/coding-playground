@@ -74,10 +74,6 @@ export async function verifyJwtSignature({ algorithm, signingInput, signature, s
     return { status: 'Not verified (optional): provide "secret: your-key" to verify HS256/HS384/HS512.' };
   }
 
-  if (typeof crypto === 'undefined' || !crypto.subtle) {
-    return { status: 'Not verified: Web Crypto is unavailable in this environment.' };
-  }
-
   const map = {
     HS256: 'SHA-256',
     HS384: 'SHA-384',
@@ -86,6 +82,10 @@ export async function verifyJwtSignature({ algorithm, signingInput, signature, s
   const hash = map[algorithm];
   if (!hash) {
     return { status: `Not verified: algorithm "${algorithm || 'unknown'}" is not supported for local verification.` };
+  }
+
+  if (typeof crypto === 'undefined' || !crypto.subtle) {
+    return { status: 'Not verified: Web Crypto is unavailable in this environment.' };
   }
 
   const encoder = new TextEncoder();
@@ -164,6 +164,9 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
         secret: decoded.secret
       });
 
+      const consoleOutput = document.getElementById('console-output');
+      const existingIframe = consoleOutput.querySelector('iframe');
+      if (existingIframe) existingIframe.remove();
       const iframe = document.createElement('iframe');
       iframe.style.width = '100%';
       iframe.style.height = '420px';
@@ -172,7 +175,7 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
       iframe.style.marginTop = '8px';
       iframe.style.marginBottom = '8px';
       iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(renderJwtResult({ ...decoded, verification }));
-      document.getElementById('console-output').appendChild(iframe);
+      consoleOutput.appendChild(iframe);
 
       onStdout('JWT decoded.');
       onSystem(verification.status);

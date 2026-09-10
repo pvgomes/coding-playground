@@ -37,11 +37,11 @@ describe('verifyJwtSignature', () => {
     .replace(/\//g, '_')
     .replace(/=+$/g, '');
 
-  async function signHs256(signingInput, secret) {
+  async function signHmac(signingInput, secret, hash) {
     const key = await crypto.subtle.importKey(
       'raw',
       encoder.encode(secret),
-      { name: 'HMAC', hash: { name: 'SHA-256' } },
+      { name: 'HMAC', hash: { name: hash } },
       false,
       ['sign']
     );
@@ -62,8 +62,16 @@ describe('verifyJwtSignature', () => {
   it('returns verified status when HS256 signature matches secret', async () => {
     const signingInput = 'a.b';
     const secret = 'my-secret';
-    const signature = await signHs256(signingInput, secret);
+    const signature = await signHmac(signingInput, secret, 'SHA-256');
     const result = await verifyJwtSignature({ algorithm: 'HS256', signingInput, signature, secret });
+    expect(result.status).to.include('Verified');
+  });
+
+  it('returns verified status when HS384 signature matches secret', async () => {
+    const signingInput = 'a.b';
+    const secret = 'my-secret';
+    const signature = await signHmac(signingInput, secret, 'SHA-384');
+    const result = await verifyJwtSignature({ algorithm: 'HS384', signingInput, signature, secret });
     expect(result.status).to.include('Verified');
   });
 
