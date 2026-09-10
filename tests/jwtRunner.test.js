@@ -75,6 +75,14 @@ describe('verifyJwtSignature', () => {
     expect(result.status).to.include('Verified');
   });
 
+  it('returns verified status when HS512 signature matches secret', async () => {
+    const signingInput = 'a.b';
+    const secret = 'my-secret';
+    const signature = await signHmac(signingInput, secret, 'SHA-512');
+    const result = await verifyJwtSignature({ algorithm: 'HS512', signingInput, signature, secret });
+    expect(result.status).to.include('Verified');
+  });
+
   it('returns invalid status when HS256 signature does not match secret', async () => {
     const result = await verifyJwtSignature({
       algorithm: 'HS256',

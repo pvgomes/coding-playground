@@ -165,9 +165,10 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
       });
 
       const consoleOutput = document.getElementById('console-output');
-      const existingIframe = consoleOutput.querySelector('iframe');
+      const existingIframe = consoleOutput.querySelector('iframe.jwt-preview');
       if (existingIframe) existingIframe.remove();
       const iframe = document.createElement('iframe');
+      iframe.className = 'jwt-preview';
       iframe.style.width = '100%';
       iframe.style.height = '420px';
       iframe.style.border = '1px solid #3c3c3c';
