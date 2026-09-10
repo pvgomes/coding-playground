@@ -44,7 +44,8 @@ function parseJwtInput(input) {
   }
 
   const fields = {};
-  for (const line of nonComment.slice(nonComment.indexOf(tokenLine) + 1)) {
+  for (const line of nonComment) {
+    if (line === tokenLine) continue;
     const colonIndex = line.indexOf(':');
     if (colonIndex <= 0) continue;
     const key = line.slice(0, colonIndex).trim().toLowerCase();
@@ -68,7 +69,7 @@ function toBase64Url(bytes) {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
 
-async function verifySignature({ algorithm, signingInput, signature, secret }) {
+export async function verifyJwtSignature({ algorithm, signingInput, signature, secret }) {
   if (!secret) {
     return { status: 'Not verified (optional): provide "secret: your-key" to verify HS256/HS384/HS512.' };
   }
@@ -156,7 +157,7 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
   async function run(code) {
     try {
       const decoded = decodeJwt(code);
-      const verification = await verifySignature({
+      const verification = await verifyJwtSignature({
         algorithm: decoded.header && decoded.header.alg,
         signingInput: `${decoded.encodedHeader}.${decoded.encodedPayload}`,
         signature: decoded.encodedSignature,
@@ -170,7 +171,6 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
       iframe.style.borderRadius = '4px';
       iframe.style.marginTop = '8px';
       iframe.style.marginBottom = '8px';
-      iframe.sandbox.add('allow-same-origin');
       iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(renderJwtResult({ ...decoded, verification }));
       document.getElementById('console-output').appendChild(iframe);
 
