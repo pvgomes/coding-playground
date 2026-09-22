@@ -121,10 +121,31 @@ export function decodeJwt(input) {
   };
 }
 
+function highlightJson(value) {
+  const json = JSON.stringify(value, null, 2);
+  return escapeHtml(json).replace(
+    /(&quot;(?:\\.|[^&]|&(?!quot;))*?&quot;)(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g,
+    (match, str, colon, bool) => {
+      if (str) {
+        return colon
+          ? `<span class="j-key">${str}</span>${colon}`
+          : `<span class="j-str">${str}</span>`;
+      }
+      if (bool) return `<span class="j-bool">${match}</span>`;
+      if (match === 'null') return `<span class="j-null">${match}</span>`;
+      return `<span class="j-num">${match}</span>`;
+    }
+  );
+}
+
 function renderJwtResult({ token, header, payload, encodedSignature, verification }) {
-  const prettyHeader = JSON.stringify(header, null, 2);
-  const prettyPayload = JSON.stringify(payload, null, 2);
   const signature = encodedSignature || '(empty)';
+  const statusText = verification && verification.status ? verification.status : '';
+  const statusClass = /Verified/.test(statusText)
+    ? 'ok'
+    : /Invalid/.test(statusText)
+      ? 'bad'
+      : 'muted';
 
   return `<!DOCTYPE html>
 <html>
@@ -132,19 +153,38 @@ function renderJwtResult({ token, header, payload, encodedSignature, verificatio
   <meta charset="utf-8">
   <title>JWT Decoder</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #222; margin: 0; padding: 20px; background: #fff; }
-    h3 { margin: 0 0 8px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.06em; color: #666; }
-    .section { border: 1px solid #e1e1e1; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
-    pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .status { font-weight: 600; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #222; margin: 0; background: #fff; display: flex; flex-direction: column; }
+    .content { flex: 1; overflow-y: auto; padding: 16px; }
+    h3 { margin: 0 0 8px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; }
+    .section { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; background: #fff; }
+    .section.code { background: #fafafa; }
+    pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; tab-size: 2; }
+    .token { color: #374151; }
+    .j-key { color: #1d4ed8; }
+    .j-str { color: #15803d; }
+    .j-num { color: #b45309; }
+    .j-bool { color: #7c3aed; }
+    .j-null { color: #9ca3af; }
+    footer { flex-shrink: 0; border-top: 1px solid #e5e7eb; background: #f9fafb; padding: 10px 16px; font-size: 0.8rem; }
+    footer .status { font-weight: 600; }
+    footer .ok { color: #15803d; }
+    footer .bad { color: #b91c1c; }
+    footer .muted { color: #6b7280; font-weight: 500; }
   </style>
 </head>
 <body>
-  <div class="section"><h3>Token</h3><pre>${escapeHtml(token)}</pre></div>
-  <div class="section"><h3>Decoded Header</h3><pre>${escapeHtml(prettyHeader)}</pre></div>
-  <div class="section"><h3>Decoded Payload</h3><pre>${escapeHtml(prettyPayload)}</pre></div>
-  <div class="section"><h3>JWT Signature</h3><pre>${escapeHtml(signature)}</pre></div>
-  <div class="section"><h3>JWT Signature Verification (Optional)</h3><div class="status">${escapeHtml(verification.status)}</div></div>
+  <div class="content">
+    <div class="section code"><h3>Token</h3><pre class="token">${escapeHtml(token)}</pre></div>
+    <div class="section code"><h3>Decoded Header</h3><pre>${highlightJson(header)}</pre></div>
+    <div class="section code"><h3>Decoded Payload</h3><pre>${highlightJson(payload)}</pre></div>
+    <div class="section code"><h3>JWT Signature</h3><pre class="token">${escapeHtml(signature)}</pre></div>
+  </div>
+  <footer>
+    <div class="status">JWT decoded.</div>
+    <div class="${statusClass}">${escapeHtml(statusText)}</div>
+  </footer>
 </body>
 </html>`;
 }
@@ -174,17 +214,14 @@ export function createJwtRunner({ onStdout, onStderr, onSystem }) {
       if (existingIframe) existingIframe.remove();
       const iframe = document.createElement('iframe');
       iframe.className = 'jwt-preview';
+      iframe.style.display = 'block';
       iframe.style.width = '100%';
-      iframe.style.height = '420px';
+      iframe.style.height = '100%';
       iframe.style.border = '1px solid #3c3c3c';
       iframe.style.borderRadius = '4px';
-      iframe.style.marginTop = '8px';
-      iframe.style.marginBottom = '8px';
+      iframe.style.background = '#fff';
       iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(renderJwtResult({ ...decoded, verification }));
       consoleOutput.appendChild(iframe);
-
-      onStdout('JWT decoded.');
-      onSystem(verification.status);
     } catch (err) {
       onStderr(err.message);
     }
