@@ -22,7 +22,8 @@ const defaultExtByLang = {
   lua: '.lua',
   plaintext: '.txt',
   'clean-ai-text': '.txt',
-  'base64-image': '.base64'
+  'base64-image': '.base64',
+  jwt: '.jwt'
 };
 
 const defaultContentByLang = {
@@ -37,6 +38,7 @@ const defaultContentByLang = {
   plaintext: '# This is a heading\n\nPaste any **formatted** text here and click Run.\nThe output will show *clean plain text* without any formatting.\n\n- List items\n- Are stripped too\n\n`Code blocks` become plain text.',
   'clean-ai-text': 'This is AI-style text — with em dashes — and en dashes – scattered around.\n\nIt also uses spaced hyphens - like this - which we can clean up.\n\nPaste your text here and click Run to remove dashes and normalize spacing.',
   'base64-image': '// Paste a data URL or raw Base64 image here, then click Run.\n//\n// Example: a 32 x 32 pixel-art cat\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR42mNYd+fT/4HEDKMOGHXAqANwSUQHZuDE1NQz+B3w/tJuOCbWAaToGXXA4EwD+AyiBJPlAHMDR4rwqAModgAMF5zsh2NccUxIDcUOAPmIkAPwqRnaITBg2RBb6QbD77qngzE2ObIdgCs1k+oAXOZQNQTwYZpHAaEQosgB1E6MZLcJRx0w2i8YEQ4AAOpa+W5QlKQWAAAAAElFTkSuQmCC',
+  jwt: '// Paste your JWT below (header.payload.signature)\n// Optional: add "secret: your-hmac-secret" on a new line for HS256/HS384/HS512 verification.\neyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJhZG1pbiI6dHJ1ZX0.signature',
   python: 'print("hello world")'
 };
 

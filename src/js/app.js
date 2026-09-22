@@ -29,6 +29,7 @@ import { createLuaRunner } from './runner/luaRunner.js';
 import { createCleanAiTextRunner } from './runner/cleanAiTextRunner.js';
 import { createBase64ImageRunner } from './runner/base64ImageRunner.js';
 import { createMermaidRunner } from './runner/mermaidRunner.js';
+import { createJwtRunner } from './runner/jwtRunner.js';
 
 const runnerCallbacks = {
   onStdout: consoleLog,
@@ -61,7 +62,8 @@ const languageModeMap = {
   lua: 'lua',
   plaintext: 'text',
   'clean-ai-text': 'text',
-  'base64-image': 'text'
+  'base64-image': 'text',
+  jwt: 'text'
 };
 
 const languageExtMap = {
@@ -76,7 +78,8 @@ const languageExtMap = {
   lua: '.lua',
   plaintext: '.txt',
   'clean-ai-text': '.txt',
-  'base64-image': '.base64'
+  'base64-image': '.base64',
+  jwt: '.jwt'
 };
 
 function detectLanguageFromPath(path) {
@@ -90,6 +93,7 @@ function detectLanguageFromPath(path) {
   if (path.endsWith('.php')) return 'php';
   if (path.endsWith('.lua')) return 'lua';
   if (path.endsWith('.txt')) return currentLanguage === 'clean-ai-text' ? 'clean-ai-text' : 'plaintext';
+  if (path.endsWith('.jwt')) return 'jwt';
   return currentLanguage;
 }
 
@@ -176,6 +180,8 @@ async function ensureRunner(lang) {
     runners[lang] = createBase64ImageRunner(runnerCallbacks);
   } else if (lang === 'mermaid') {
     runners[lang] = createMermaidRunner(runnerCallbacks);
+  } else if (lang === 'jwt') {
+    runners[lang] = createJwtRunner(runnerCallbacks);
   }
 
   return runners[lang];

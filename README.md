@@ -14,6 +14,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Mermaid** – Render flowcharts, sequence diagrams, and other Mermaid diagrams locally
 - **HTML** – Live preview with interactive elements
 - **Base64 Image** – Decode a pasted Base64 image or `data:image/...;base64,...` URL into a preview
+- **JWT** – Decode a JSON Web Token into header/payload and optionally verify HS256/HS384/HS512 signatures with a provided secret
 - **Image Cleanup** – Upload an image at `/cleanup`, remove its existing metadata, and download a JPEG with a new description and today’s timestamps
 
 🎨 **Code Editor**
@@ -66,6 +67,7 @@ open http://localhost:8000
 6. **Preview a Base64 Image** – Select **Base64 Image**, paste raw Base64 or a Base64 image data URL, then click **Run**. Lines beginning with `//` are comments and are ignored. PNG, JPEG, GIF, WebP, AVIF, BMP, and ICO are supported.
 7. **Clean Image Metadata** – Open **Cleanup** in the top bar, upload an image, optionally add a description, then download the cleaned JPEG. If no description is supplied, it uses `image`.
 8. **Render Mermaid Diagrams** – Select **Mermaid**, edit the `.mmd` source, then click **Run** to render the diagram in the console.
+9. **Decode JWTs** – Select **JWT**, paste a token in `header.payload.signature` format, and optionally add `secret: your-hmac-secret` on a new line to verify HMAC signatures.
 
 ### Code Execution
 
