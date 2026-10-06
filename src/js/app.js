@@ -60,6 +60,7 @@ const languageModeMap = {
   html: 'text/html',
   php: 'php',
   lua: 'lua',
+  kotlin: 'text/x-kotlin',
   plaintext: 'text',
   'clean-ai-text': 'text',
   'base64-image': 'text',
@@ -76,6 +77,7 @@ const languageExtMap = {
   html: '.html',
   php: '.php',
   lua: '.lua',
+  kotlin: '.kt',
   plaintext: '.txt',
   'clean-ai-text': '.txt',
   'base64-image': '.base64',
@@ -92,6 +94,7 @@ function detectLanguageFromPath(path) {
   if (path.endsWith('.html') || path.endsWith('.htm')) return 'html';
   if (path.endsWith('.php')) return 'php';
   if (path.endsWith('.lua')) return 'lua';
+  if (path.endsWith('.kt') || path.endsWith('.kts')) return 'kotlin';
   if (path.endsWith('.txt')) return currentLanguage === 'clean-ai-text' ? 'clean-ai-text' : 'plaintext';
   if (path.endsWith('.jwt')) return 'jwt';
   return currentLanguage;
@@ -174,6 +177,9 @@ async function ensureRunner(lang) {
     runners[lang] = createPhpRunner(runnerCallbacks);
   } else if (lang === 'lua') {
     runners[lang] = createLuaRunner(runnerCallbacks);
+  } else if (lang === 'kotlin') {
+    const { createKotlinRunner } = await import('./runner/kotlinRunner.js');
+    runners[lang] = createKotlinRunner(runnerCallbacks);
   } else if (lang === 'clean-ai-text') {
     runners[lang] = createCleanAiTextRunner(runnerCallbacks);
   } else if (lang === 'base64-image') {

@@ -1,6 +1,6 @@
 # Coding Playground
 
-A fast, browser-based multi-language coding playground and diagram viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, Markdown, Mermaid, and HTML directly in your browser—no server required, no advertisements.
+A fast, browser-based multi-language coding playground and diagram viewer with syntax highlighting and file management. Write, run, and test Python, JavaScript, Clojure, Kotlin, Markdown, Mermaid, and HTML directly in your browser—no server required, no advertisements.
 
 Attention Replit, you're nice, but sometimes people just want to run a simple code.
 
@@ -10,6 +10,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Python** – Powered by Pyodide
 - **JavaScript** – Native browser execution via Web Worker
 - **Clojure** – Scittle runtime with full output capture
+- **Kotlin** – Compiled and executed remotely by the public Kotlin Playground API (requires an internet connection)
 - **Markdown** – Live preview with HTML rendering
 - **Mermaid** – Render flowcharts, sequence diagrams, and other Mermaid diagrams locally
 - **HTML** – Live preview with interactive elements
@@ -43,6 +44,7 @@ Attention Replit, you're nice, but sometimes people just want to run a simple co
 - **Python**: `.py`
 - **JavaScript**: `.js`
 - **Clojure**: `.clj`
+- **Kotlin**: `.kt`
 - **Mermaid**: `.mmd`
 
 ## How to Use
