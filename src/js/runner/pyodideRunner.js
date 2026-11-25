@@ -26,6 +26,24 @@ export function createPyodideRunner({ onStdout, onStderr, onSystem }) {
     await ensurePyodideScript();
     onSystem('Loading Python runtime...');
     pyodide = await loadPyodide();
+    // Pyodide has no usable stdin in the browser (input() raises OSError 29),
+    // so route input() through a browser prompt dialog.
+    pyodide.registerJsModule('_browser_io', {
+      prompt: message => window.prompt(message === '' ? 'Python input:' : message)
+    });
+    pyodide.runPython(`
+import builtins, sys, _browser_io
+
+def _browser_input(prompt=''):
+    prompt = str(prompt)
+    answer = _browser_io.prompt(prompt)
+    if answer is None:
+        raise EOFError('Input cancelled')
+    sys.stdout.write(prompt + answer + '\\n')
+    return answer
+
+builtins.input = _browser_input
+`);
     onSystem('Python runtime ready. Click Run to execute your code.');
   }
 
